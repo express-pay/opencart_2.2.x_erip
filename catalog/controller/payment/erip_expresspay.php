@@ -1,5 +1,6 @@
 <?php
 class ControllerPaymentEripExpressPay extends Controller {
+	
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['redirect'] = $this->url->link('payment/erip_expresspay/send');
@@ -24,9 +25,9 @@ class ControllerPaymentEripExpressPay extends Controller {
             "AccountNo" => $this->session->data['order_id'],
             "Amount" => $this->currency->format($order_info['total'], $this->session->data['currency'], '', false),
             "Currency" => $currency,
-            "Surname" => $order_info['payment_lastname'],
-            "FirstName" => $order_info['payment_firstname'],
-            "City" => $order_info['payment_city'],
+            "Surname" => mb_strimwidth($order_info['payment_lastname'], 0, 30),
+            "FirstName" => mb_strimwidth($order_info['payment_firstname'], 0, 30),
+            "City" => mb_strimwidth($order_info['payment_city'], 0, 30),
             "IsNameEditable" => ( ( $this->config->get('erip_expresspay_name_editable') == 'on' ) ? 1 : 0 ),
             "IsAddressEditable" => ( ( $this->config->get('erip_expresspay_address_editable') == 'on' ) ? 1 : 0 ),
             "IsAmountEditable" => ( ( $this->config->get('erip_expresspay_amount_editable') == 'on' ) ? 1 : 0 )
